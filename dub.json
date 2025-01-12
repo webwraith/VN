@@ -1,0 +1,26 @@
+{
+	"authors": [
+		"Matt"
+	],
+	"copyright": "Copyright © 2024, Matt",
+	"dependencies": {
+		"raylib-d": "~>5.0.1",
+		"raylib-d:install": "~>5.0.1"
+	},
+	"description": "A Visual Novel engine, written in D",
+	"lflags-linux": [
+		"-rpath=$$ORIGIN"
+	],
+	"lflags-osx": [
+		"-rpath",
+		"@executable_path/"
+	],
+	"lflags-posix": [
+		"-L."
+	],
+	"libs": [
+		"raylib"
+	],
+	"license": "proprietary",
+	"name": "vn"
+}

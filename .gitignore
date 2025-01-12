@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/vn
+vn.so
+vn.dylib
+vn.dll
+vn.a
+vn.lib
+vn-test-*
+*.exe
+*.o
+*.obj
+*.lst
