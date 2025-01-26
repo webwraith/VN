@@ -62,36 +62,36 @@ class Var(T) {
 
 class DeltaVar(T) : Var!T {
 	protected {
-		T speed;
+		T _speed;
 	}
 
 	this(T value, T speed) {
 		super(value);
-		this.speed = speed;
+		_speed = speed;
 	}
 
 	this(T value, T speed, T min, T max) {
 		super(value, max, min);
-		this.speed = speed;
+		_speed = speed;
 	}
 
 	ref T speed() {
-		return speed;
+		return _speed;
 	}
 
 	ref T speed(ref T value) {
-		return speed = value;
+		return _speed = value;
 	}
 
 	void update(int delta) {
 		if (!idle) {
 			if (_value < _target) {
-				_value += speed * delta;
+				_value += _speed * delta;
 				if (_value > _target) {
 					_value = _target;
 				}
 			} else if (_value > _target) {
-				_value -= speed * delta;
+				_value -= _speed * delta;
 				if (_value < _target) {
 					_value = _target;
 				}

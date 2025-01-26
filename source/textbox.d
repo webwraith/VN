@@ -13,37 +13,41 @@ class TextBoxState {
 	int height, width, x, y;
 
 	Color box_colour;
-	DeltaVar!ubyte box_alpha;
+	ubyte alpha, max_alpha;
+	byte speed;
 
-	this(){
-		box_alpha = new DeltaVar!ubyte(0, 5, 0, 70);
+	this(ubyte max_alpha = 255) {
+		this.max_alpha = max_alpha;
 	}
 
-	void show() {
-		box_alpha.target = 70;
+
+	void show(ubyte speed = 2) {
+		// set the speed of the fade
+		if (speed > 127) speed = 127;
+		if (this.speed == 0) this.speed = speed;
 	}
 
-	void hide() {
-		// reduce opacity of the box
-		box_alpha.target = 0;
+	void hide(ubyte speed = 2) {
+		if (speed > 127) speed = 127;
+		if (this.speed == 0) this.speed = cast(ubyte)(cast(int)(-speed));
 	}
 
 	bool isAnimating() {
-		return !box_alpha.idle;
+		return speed > 0;
 	}
 
 	bool isVisible() {
-		return !box_alpha.min;
+		return alpha > 0;
 	}
 
-	void update(int delta) {
+	void update() {
 		// if the box is fading in/out, update it and return
-		box_alpha.update(delta);
+		alpha += speed;
 	}
 
 	/// draws the current state of the text box and associated character graphics
-	void render() {
-		box_colour.a = to!ubyte(box_alpha.value);
+	void draw() {
+		box_colour.a = alpha;
 		DrawRectangle(x, y, width, height, box_colour);
 	}
 }
