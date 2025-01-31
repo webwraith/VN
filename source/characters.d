@@ -7,13 +7,13 @@ import raylib;
 class Characters{
 	Character[string] characters;
 	
-	void add(string id, Character character, int x, Facing facing) {
-		characters[id] = character;
-		if (facing == Facing.Right) {
+	void add(string id, Character character, int x, Facing facing = Facing.Right) {
+		character.x = x;
+		
+		if (facing == Facing.Left) {
 			character.flipSprite();
 		}
-		characters[id].x = x;
-		characters[id].y = GetScreenHeight() - characters[id].moods[characters[id].current_mood].height;
+		characters[id] = character;
 	}
 	
 	void remove(string id) {

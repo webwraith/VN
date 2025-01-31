@@ -8,6 +8,7 @@ import std.conv;
 import raylib;
 import view;
 import assets;
+import characters;
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
@@ -46,7 +47,8 @@ void main()
 	auto b2 = LoadTexture(get_path(`bg`, `2.png`).toStringz);
 
 	current_state.background.fadeToImage(bg, 2);
-	writeln(bg);
+	Character maru = Character(["idle": LoadTexture(get_character_path("maru").toStringz)]);
+	current_state.characters.add("maru", maru, 120);
 
 	double delta = 0.0;
 	while (!WindowShouldClose()) {
@@ -64,41 +66,14 @@ void main()
 		else if (delta > 16) {
 			current_state.background.fadeToColor(Colors.BLACK, 4);
 		}
+		else if (delta > 12) {
+			current_state.characters.characters["maru"].activate();
+		}
 		else if (delta > 8) {
 			current_state.background.fadeToImage(b2, 4);
+			current_state.characters.characters["maru"].show();
 		}
 	}
-	// +/
-	
-	/++
-		// This is a quick test of the colour tint option for the DrawTexture function
-		InitWindow(1920, 1080, "Test");
-		
-		auto b1 = LoadTexture((get_path(`bg`, `1.png`)).toStringz);
-		auto b2 = LoadTexture((get_path(`bg`, `2.png`)).toStringz);
-
-		Color tint = Colors.WHITE;
-		Color tint2 = Colors.WHITE;
-		byte delta = 2;
-		ubyte alpha = 255;
-
-		while(!WindowShouldClose) {
-			BeginDrawing();
-
-			DrawTexture(b1, 0, 0, tint);
-			DrawTexture(b2, 0, 0, tint2);
-			
-			EndDrawing();
-			
-			tint.a = alpha;
-			tint2.a = 255 - alpha;
-
-			alpha += delta;
-			if (alpha == 0 || alpha == 255) {
-				delta *= -1;
-			}
-		}
-	// +/
 
 	CloseWindow();
 }
